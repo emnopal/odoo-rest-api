@@ -2,11 +2,5 @@ __pycache__
 *.pyc
 .env
 notes.txt
-addons/*
-!addons/registration_form
-!addons/registration_form/
-!addons/registration_form/*
-!addons/registration_form/**
-!addons/README.md
 __pycache__
 *.pyc
