@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   postgres:
-    container_name: postgres
-    image: postgres:13 # Latest postgres not support odoo 14
+    container_name: postgres-odoo
+    image: postgres:13-alpine # Latest postgres not support odoo 14
     restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -14,25 +14,9 @@ services:
       - odoo-db-data:/var/lib/postgresql/data/odoo/
     ports:
       - 5432:5432/tcp
-
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4:latest
-    restart: always
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    ports:
-      - 5050:80/tcp
-    links:
-      - postgres:postgres
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-    depends_on:
-      - postgres
-
+ 
   odoo:
-    container_name: odoo
+    container_name: odoo-frontend
     build: .
     restart: always
     depends_on:
@@ -47,7 +31,7 @@ services:
       - 8069:8069/tcp
 
   nginx:
-    container_name: nginx
+    container_name: odoo-proxy-pass
     image: nginx:latest
     volumes:
       - ./config/nginx:/etc/nginx/conf.d
@@ -61,20 +45,6 @@ services:
       - odoo:odoo
       - pgadmin:pgadmin
 
-  # Skip if you don't use ngrok
-  # ngrok:
-  #   container_name: ngrok
-  #   image: wernight/ngrok:latest
-  #   ports:
-  #     - 4040:4040
-  #   environment:
-  #     NGROK_PROTOCOL: http
-  #     NGROK_PORT: nginx:80
-  #     NGROK_AUTH: ${NGROK_AUTH}
-  #   depends_on:
-  #     - nginx
-
 volumes:
   odoo-db-data:
   odoo-web-data:
-  pgadmin-data:
