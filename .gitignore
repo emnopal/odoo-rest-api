@@ -1,6 +1,7 @@
 __pycache__
 *.pyc
-.env
+*.env
 notes.txt
 __pycache__
 *.pyc
+config/odoo/odoo.conf
