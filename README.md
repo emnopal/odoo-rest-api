@@ -1,7 +1,7 @@
 # Odoo REST API Module
 This is simple odoo module for REST API
 
-# How to run?
+## How to run?
 - Fresh Install:
   - `docker-compose up -d` in your terminal (if you want to run using docker and/or you want to fresh install odoo)
 
@@ -9,7 +9,7 @@ This is simple odoo module for REST API
   - move `addons/odoo-rest-api` into your odoo addons directory (if you have odoo), install in Apps then check the API in `GET /api/ping`
   - if you have existing odoo in docker and want to install this addons, mount directory `addons/odoo-rest-api` to odoo image which is running in docker and follow a step above
 
-# Endpoint
+## Endpoint
 - Check if API is working or server is active
   - `GET /api/ping`
   - `GET /api/check`
@@ -35,3 +35,9 @@ This is simple odoo module for REST API
 - Delete Data
   - `DELETE /api/model/:model`
   - `DELETE /api/model/:model/:rec_id`
+
+## TODOS
+- Create API documentation such as OpenAPI (for JSON) or Swagger UI (for web view)
+- Create unit test
+- Implement more secure Auth such as Session, JWT, OAuth or even SSO
+- Create more endpoint or improve endpoint (right now, i don't have an idea what endpoint should i created)
