@@ -33,8 +33,7 @@ class RestAuth(http.Controller):
 
         params = request.jsonrequest
         try:
-            request.session.authenticate(
-                params['db'], params['username'], params['password'])
+            request.session.authenticate(params['db'], params['username'], params['password'])
             return RestHelper.JsonValidResponse(request.env['ir.http'].session_info())
         except Exception as e:
             if str(e) == _('Access Denied'):

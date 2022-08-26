@@ -91,14 +91,14 @@ class RestController(http.Controller):
         if args.get('page_size'):
             page_size = int(args.get('page_size'))
             count = len(records)
-            total_page_number = math.ceil(count/page_size)
+            total_page_number = math.ceil(count / page_size)
 
             if args.get('page'):
                 current_page = int(args.get('page'))
             else:
                 current_page = 1  # Default page Number
-            start = page_size*(current_page-1)
-            stop = current_page*page_size
+            start = page_size * (current_page - 1)
+            stop = current_page * page_size
             records = records[start:stop]
             next_page = current_page + 1 if 0 < current_page + 1 <= total_page_number else None
             prev_page = current_page - 1 if 0 < current_page - 1 <= total_page_number else None
