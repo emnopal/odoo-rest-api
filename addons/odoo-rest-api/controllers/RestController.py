@@ -2,6 +2,7 @@ import math
 from odoo import http, _, exceptions
 from odoo.http import request
 from .RestHelper import RestHelper
+from typing import Optional, Dict
 
 ENDPOINT = '/api/model'
 
@@ -9,14 +10,15 @@ ENDPOINT = '/api/model'
 class RestController(http.Controller):
 
     """
-    just for example
+    just for example\n
     Do not use json.dumps if type=='json'
 
+    ```
     @http.route(
         f'{ENDPOINT}/test/<type:param>',
         auth="user", type="json", methods=['GET'], csrf=False
     )
-    def SampleRoute(self, param):
+    def SampleRoute(self, param: Dict[str, any]) -> Dict[str, any]:
         args = request.httprequest.args # get parameter from url
         jsonargs = request.jsonrequest # get parameter from json
         data = {
@@ -24,6 +26,7 @@ class RestController(http.Controller):
             'param2': args.get('param2'),
         }
         return JsonValidResponse(data)
+    ```
     """
 
     @http.route([
@@ -32,7 +35,11 @@ class RestController(http.Controller):
         f'{ENDPOINT}/<string:model>/<int:rec_id>',
         f'{ENDPOINT}/<string:model>/<int:rec_id>/<string:field>',
     ], auth="user", type="json", methods=['GET'], csrf=False)
-    def GetData(self, model, rec_id=None, field=None):
+    def GetData(
+        self,
+        model: str, rec_id: Optional[int] = None,
+        field: Optional[str] = None
+    ) -> Dict[str, any]:
 
         args = request.httprequest.args
 
@@ -115,7 +122,7 @@ class RestController(http.Controller):
     @http.route([
         f'{ENDPOINT}/<string:model>',
     ], auth="user", type="json", methods=['POST'], csrf=False)
-    def PostData(self, model):
+    def PostData(self, model: str) -> Dict[str, any]:
 
         params = request.jsonrequest
 
@@ -132,7 +139,7 @@ class RestController(http.Controller):
         f'{ENDPOINT}/<string:model>',
         f'{ENDPOINT}/<string:model>/<int:rec_id>',
     ], auth="user", type="json", methods=['PUT'], csrf=False)
-    def PutData(self, model, rec_id=None):
+    def PutData(self, model: str, rec_id: Optional[int] = None) -> Dict[str, any]:
 
         params = request.jsonrequest
         args = request.httprequest.args
@@ -179,7 +186,7 @@ class RestController(http.Controller):
         f'{ENDPOINT}/<string:model>',
         f'{ENDPOINT}/<string:model>/<int:rec_id>',
     ], auth="user", type="json", methods=['DELETE'], csrf=False)
-    def DeleteData(self, model, rec_id=None):
+    def DeleteData(self, model: str, rec_id: Optional[int] = None) -> Dict[str, any]:
 
         params = request.jsonrequest
         args = request.httprequest.args

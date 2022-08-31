@@ -1,5 +1,6 @@
 from odoo import http, _
 from .RestHelper import RestHelper
+from typing import Dict
 
 
 class RestCheck(http.Controller):
@@ -15,7 +16,7 @@ class RestCheck(http.Controller):
         '/api/health',
     ], auth="public", type="json", csrf=False
     )
-    def CheckServer(self):
+    def CheckServer(self) -> Dict[str, any]:
         """
         Checking the server
         """
@@ -29,7 +30,7 @@ class RestCheck(http.Controller):
         '/api/database'
     ], auth="public", type="json", csrf=False
     )
-    def DBList(self):
+    def DBList(self) -> Dict[str, any]:
         """
         List of Available Database
         """

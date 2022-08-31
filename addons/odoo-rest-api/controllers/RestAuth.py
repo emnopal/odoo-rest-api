@@ -1,6 +1,7 @@
 from odoo import http, _
 from odoo.http import request
 from .RestHelper import RestHelper
+from typing import Dict
 
 ENDPOINT_AUTH = '/api/auth'
 
@@ -8,14 +9,15 @@ ENDPOINT_AUTH = '/api/auth'
 class RestAuth(http.Controller):
 
     """
-    just for example
+    just for example\n
     Do not use json.dumps if type=='json'
 
+    ```
     @http.route(
         f'{ENDPOINT}/test/<type:param>',
         auth="user", type="json", methods=['GET'], csrf=False
     )
-    def SampleRoute(self, param):
+    def SampleRoute(self, param: dict) -> Dict[str, any]:
         args = request.httprequest.args # get parameter from url
         jsonargs = request.jsonrequest # get parameter from json
         data = {
@@ -23,13 +25,14 @@ class RestAuth(http.Controller):
             'param2': args.get('param2'),
         }
         return JsonValidResponse(data)
+    ```
     """
 
     @http.route(
         f'{ENDPOINT_AUTH}/login',
         auth="none", type="json", methods=['POST'], csrf=False
     )
-    def Login(self):
+    def Login(self) -> Dict[str, any]:
 
         params = request.jsonrequest
         try:
@@ -44,7 +47,7 @@ class RestAuth(http.Controller):
         f'{ENDPOINT_AUTH}/logout',
         auth="user", type="json", methods=['GET', 'POST'], csrf=False
     )
-    def Logout(self):
+    def Logout(self) -> Dict[str, any]:
 
         try:
             request.session.logout(keep_db=True)

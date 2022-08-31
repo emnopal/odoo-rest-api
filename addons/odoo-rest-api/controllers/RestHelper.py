@@ -1,11 +1,12 @@
 from odoo import _
 from odoo.http import Response
+from typing import Optional, Dict
 
 
 class RestHelper:
 
     @staticmethod
-    def JsonValidResponse(data, valid_code=200):
+    def JsonValidResponse(data: any, valid_code: Optional[int] = 200) -> Dict[str, any]:
         """
         Return a JsonResponse with the given data and status code if code is valid or no exceptions.
         """
@@ -18,7 +19,7 @@ class RestHelper:
         }
 
     @staticmethod
-    def JsonErrorResponse(error, error_code=400):
+    def JsonErrorResponse(error: any, error_code: Optional[int] = 400) -> Dict[str, any]:
         """
         Return a JsonResponse with the given data and status code if code is not valid or with exceptions.
         """
